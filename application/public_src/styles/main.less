@@ -7,8 +7,30 @@
   font-family: 'Open Sans';
 }
 
+@highlight-color: gold;
+
 #map {
   height: calc(~'100vh - @{navbar-height}');
   width: 100%;
   margin: -20px 0;
+
+  .leaflet-pane>svg {
+    pointer-events: auto;
+  }
+  .leaflet-pane>svg path {
+    pointer-events: auto;
+  }
+
+  path.contour{
+    stroke-linejoin: round;
+    cursor: pointer;
+    transition: stroke 100ms linear,
+      fill-opacity 100ms linear;
+    &:hover {
+      fill-opacity: 1;
+    }
+    &.selected {
+      stroke: @highlight-color;
+    }
+  }
 }
