@@ -1,8 +1,6 @@
 # bathymetry
 
 
----
-
 ## Installation
 
 #### 1. Install Gulp
@@ -24,5 +22,3 @@
 #### 3. Build
 
 `gulp build && gulp watch`
-
-----
