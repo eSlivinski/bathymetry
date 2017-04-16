@@ -2,7 +2,7 @@
 application/node_modules
 application/yarn.lock
 
-application/public/scripts/*
-application/public/styles/*
-application/public/fonts/*
-application/public/index.html
+application/public_src/*
+application/package.json
+application/gulpfile.js
+application/.eslintrc.js
