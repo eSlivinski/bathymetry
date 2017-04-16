@@ -1,8 +1,0 @@
-{
-  "dependencies": {
-    "mapbox-gl": "^0.35.1",
-    "turf-buffer": "^3.0.12",
-    "turf-line-to-polygon": "^0.2.1",
-    "turf-simplify": "^3.0.12"
-  }
-}

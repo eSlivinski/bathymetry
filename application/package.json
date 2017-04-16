@@ -14,7 +14,8 @@
     "leaflet": "^1.0.3",
     "lodash": "^4.17.4",
     "riot": "^3.4.2",
-    "riotify": "^2.0.0"
+    "riotify": "^2.0.0",
+    "turf-simplify": "^3.0.12"
   },
   "devDependencies": {
     "browser-sync": "^2.18.8",
