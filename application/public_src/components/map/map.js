@@ -12,7 +12,7 @@ this.on('mount', function() {
   }).addTo(map);
 
 
-  d3.json('../data/crescent.geojson', function (err, data) {
+  d3.json('data/crescent.geojson', function (err, data) {
     if (err) { return console.error(err); }
     crescent = L.geoJSON(data).addTo(map);
     map.fitBounds(crescent.getBounds());
