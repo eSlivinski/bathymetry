@@ -1,13 +1,28 @@
-#bathymetry
+# bathymetry
 
-### Installation
-**Install Gulp**
+
+---
+
+## Installation
+
+#### 1. Install Gulp
+
 `npm install gulp --global`
 
-**Install Dependencies**
-`cd application && npm install`
 *OR*
+
+`yarn add gulp --global`
+
+#### 2. Install Dependencies
+
+`cd application && npm install`
+
+*OR*
+
 `cd application && yarn`
 
-**Build**
+#### 3. Build
+
 `gulp build && gulp watch`
+
+----
