@@ -4,11 +4,17 @@
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <link rel="stylesheet" href="{{cache-break:styles/main.css}}">
+    <link rel="stylesheet" href="styles/main.min.css">
   </head>
   <body>
-    <todo></todo>
-
-    <script src="{{cache-break:scripts/app.min.js}}"></script>
+    <div class="container-fluid">
+      <global-header></global-header>
+      <global-map></global-map>
+    </div>
+    <script src="scripts/dependencies.min.js"></script>
+    <script src="scripts/app.min.js"></script>
+    <script id="__bs_script__">//<![CDATA[
+      document.write("<script async src='http://HOST:8081/browser-sync/browser-sync-client.js?v=2.18.8'><\/script>".replace("HOST", location.hostname));
+  //]]></script>
   </body>
 </html>

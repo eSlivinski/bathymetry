@@ -1,3 +1,6 @@
 .DS_Store
 application/node_modules
 application/yarn.lock
+
+application/public/scripts/**.js
+application/public/styles/**.css

@@ -1,9 +1,13 @@
-@import url('https://fonts.googleapis.com/css?family=Open+Sans');
 @import '../../node_modules/bootstrap/less/bootstrap.less';
 @import '../../node_modules/font-awesome/less/font-awesome.less';
-
-// @fa-font-path: '../../node_modules/font-awesome/'
+@import (less) '../../node_modules/leaflet/dist/leaflet.css';
 
 * {
   font-family: 'Open Sans';
+}
+
+#map {
+  height: calc(~'100vh - @{navbar-height}');
+  width: 100%;
+  margin: -20px 0;
 }
