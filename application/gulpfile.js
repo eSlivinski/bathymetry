@@ -29,6 +29,18 @@ var getStamp = function() {
   return year + month + day + seconds;
 };
 
+var packageScripts = function (fileName) {
+  return browserify({ entries: ['public_src/scripts/' + fileName + '.js'], debug: true })
+    .transform(riotify)
+    .bundle()
+    .on('error', onError)
+    .pipe(source( fileName + '.min.js' ))
+    .pipe(buffer())
+    .pipe(uglify())
+    .on('error', onError)
+    .pipe(gulp.dest('./public/scripts'));
+};
+
 gulp.task('browser-sync', function() {
   browsersync({
     server: { baseDir: 'public' },
@@ -46,23 +58,11 @@ gulp.task('move-fonts', function() {
 });
 
 gulp.task('browserify-dependencies', function () {
-  return browserify({ entries: ['public_src/scripts/dependencies.js'], debug: true })
-    .transform(riotify)
-    .bundle()
-    .pipe(source('dependencies.min.js'))
-    .pipe(buffer())
-    .pipe(uglify())
-    .pipe(gulp.dest('./public/scripts'));
+  return packageScripts('dependencies');
 });
 
 gulp.task('browserify-scripts', function () {
-  return browserify({ entries: ['public_src/scripts/app.js'], debug: true })
-    .transform(riotify)
-    .bundle()
-    .pipe(source('app.min.js'))
-    .pipe(buffer())
-    .pipe(uglify())
-    .pipe(gulp.dest('./public/scripts'));
+  return packageScripts('app');
 });
 
 gulp.task('compile-styles', function() {
