@@ -2,5 +2,7 @@
 application/node_modules
 application/yarn.lock
 
-application/public/scripts/**.js
-application/public/styles/**.css
+application/public/scripts/*
+application/public/styles/*
+application/public/fonts/*
+application/public/index.html
