@@ -6,6 +6,7 @@ let gulp = require("gulp");
 let gutil = require("gulp-util");
 let less = require('gulp-less');
 let minifycss = require('gulp-minify-css');
+let nodemon = require('gulp-nodemon');
 let path = require('path');
 let plumber = require('gulp-plumber');
 let rename = require('gulp-rename');
@@ -92,12 +93,30 @@ gulp.task('cachebust', () => {
     .pipe(gulp.dest('public/'));
 });
 
-gulp.task('watch', ['browser-sync'], () => {
+gulp.task('server', () => {
+  let stream = nodemon({
+    script: 'server/main.js',
+    ext: 'html js',
+    tasks: []
+  });
+
+  stream
+      .on('restart', ()=> {
+        gutil.log(gutil.colors.blue('restarting node server'));
+      })
+      .on('crash', () =>{
+        onError('Node server has crashed');
+        stream.emit('restart', 10);  // restart the server in 10 seconds
+      });
+});
+
+gulp.task('watch', ['browser-sync', 'server'], () => {
   gulp.watch(['public_src/styles/*.less'], ['compile-styles']);
   gulp.watch(['public_src/components/**/**.**', 'public_src/scripts/app.js'], ['browserify-scripts']);
   gulp.watch(['public_src/scripts/dependencies.js'], ['browserify-dependencies']);
   gulp.watch(['public/scripts/*.js'])
       .on('change', () => {
+        gutil.log(gutil.colors.blue('reloading static files'));
         browsersync.reload();
       });
 });
