@@ -21,4 +21,4 @@
 
 #### 3. Build
 
-`gulp build && gulp watch`
+`gulp`
