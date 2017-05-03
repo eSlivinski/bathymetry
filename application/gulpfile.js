@@ -1,40 +1,40 @@
-var babel = require('gulp-babel');
-var browserify = require("browserify");
-var browsersync = require('browser-sync');
-var buffer = require('vinyl-buffer');
-var gulp = require("gulp");
-var gutil = require("gulp-util");
-var less = require('gulp-less');
-var minifycss = require('gulp-minify-css');
-var path = require('path');
-var plumber = require('gulp-plumber');
-var rename = require('gulp-rename');
-var replace = require('gulp-replace');
-var riotify = require('riotify');
-var source = require('vinyl-source-stream');
-var sourcemaps = require('gulp-sourcemaps');
-var uglify = require("gulp-uglify");
+let babel = require('gulp-babel');
+let browserify = require("browserify");
+let browsersync = require('browser-sync');
+let buffer = require('vinyl-buffer');
+let gulp = require("gulp");
+let gutil = require("gulp-util");
+let less = require('gulp-less');
+let minifycss = require('gulp-minify-css');
+let path = require('path');
+let plumber = require('gulp-plumber');
+let rename = require('gulp-rename');
+let replace = require('gulp-replace');
+let riotify = require('riotify');
+let source = require('vinyl-source-stream');
+let sourcemaps = require('gulp-sourcemaps');
+let uglify = require("gulp-uglify");
 
-var onError = function (err) {
-  var msg = gutil.colors.bold.underline('AN ERROR OCCURED'),
+function onError (err) {
+  let msg = gutil.colors.bold.underline('AN ERROR OCCURED'),
       img = '(╯°□°)╯︵ ┻━┻ ',
       log = gutil.colors.red(msg, img, '\n' + err );
   gutil.log(log).beep();
   this.emit('end');
-};
+}
 
-var getStamp = function() {
-  var timestamp = new Date();
+function getStamp () {
+  let timestamp = new Date();
   return [
     timestamp.getFullYear().toString(),
     ('0' + (timestamp.getMonth() + 1)).slice(-2),
     ('0' + timestamp.getDate()).slice(-2),
     timestamp.getSeconds().toString()
   ].join('');
-};
+}
 
-var bundleScripts = function (fileName, es6) {
-  var map = browserify('public_src/scripts/' + fileName + '.js')
+function bundleScripts (fileName, es6) {
+  let map = browserify('public_src/scripts/' + fileName + '.js')
     .transform(riotify)
     .bundle().on('error', onError)
     .pipe(source( fileName + '.min.js' ))
@@ -46,11 +46,10 @@ var bundleScripts = function (fileName, es6) {
   }
 
   return map
-    //.pipe(uglify()).on('error', onError)
+    .pipe(uglify()).on('error', onError)
     .pipe(sourcemaps.write('./'))
     .pipe(gulp.dest('./public/scripts'));
-};
-
+}
 
 // https://www.browsersync.io/docs/options
 gulp.task('browser-sync', () => {
@@ -59,10 +58,6 @@ gulp.task('browser-sync', () => {
     port: 8081,
     open: false
   });
-});
-
-gulp.task('browsersync-reload', () => {
-  browsersync.reload();
 });
 
 gulp.task('move-fonts', () => {
@@ -86,7 +81,7 @@ gulp.task('compile-styles', () => {
     .pipe(rename({ suffix: '.min' }))
     .pipe(minifycss())
     .pipe(gulp.dest('./public/styles'))
-    .pipe(browsersync.reload({ stream:true }));
+    .pipe(browsersync.reload({ stream: true }));
 });
 
 gulp.task('cachebust', () => {
@@ -98,10 +93,13 @@ gulp.task('cachebust', () => {
 });
 
 gulp.task('watch', ['browser-sync'], () => {
-  gulp.watch('public_src/styles/*.less', ['compile-styles']);
-  gulp.watch('public_src/components/**/**.**', ['browserify-scripts', 'browsersync-reload']);
-  gulp.watch('public_src/scripts/app.js', ['browserify-scripts', 'browsersync-reload']);
-  gulp.watch('public_src/scripts/dependencies.js', ['browserify-dependencies', 'browsersync-reload']);
+  gulp.watch(['public_src/styles/*.less'], ['compile-styles']);
+  gulp.watch(['public_src/components/**/**.**', 'public_src/scripts/app.js'], ['browserify-scripts']);
+  gulp.watch(['public_src/scripts/dependencies.js'], ['browserify-dependencies']);
+  gulp.watch(['public/scripts/*.js'])
+      .on('change', () => {
+        browsersync.reload();
+      });
 });
 
 
@@ -115,9 +113,4 @@ gulp.task('build', [
   gutil.log(gutil.colors.green.bold.underline('BUILD COMPLETE'));
 });
 
-gulp.task('test', () => {
-  gulp.src('public_src/components/map/map.js')
-  .transform(babelify, { presets: ["es2015"] });
-});
-
-gulp.task('default', ['build']);
+gulp.task('default', ['build', 'watch']);

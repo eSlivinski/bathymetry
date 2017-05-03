@@ -11,6 +11,7 @@
     "browserify": "^14.3.0",
     "d3": "^4.8.0",
     "d3-contour": "^1.1.0",
+    "d3-hsv": "^0.1.0",
     "font-awesome": "^4.7.0",
     "leaflet": "^1.0.3",
     "lodash": "^4.17.4",
